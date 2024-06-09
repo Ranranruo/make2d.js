@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            background-color: #eee;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+</body>
+<script>
+    // 캔버스 생성과 그리기
+    // 이전 과정에서 공이 어떻게 그려지는지 배웠다. 이번엔 공을 움직이게 만들어보자
+    // 기술적으로는 화면에 공을 그렸다 지우는 과정을 반복하게 되는데,
+    // 매 프레임 마다 공의 위치를 조금씩 다르게 해서 그리면 공이 움직이는것 처럼 보이게 된다.
+    // 영화 화면이 움직이는 방식과 유사하다.
+
+    // canvas에 <canvas> 태그에 대한 참조를 저장했다.
+    // ctx에 캔버스에 그리기 위한 실질적 도구인 2D rendering context 변수를 저장했다.
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // 공의 위치 값이 저장될 x, y 변수 선언
+    let x = canvas.width / 2;
+    let y = canvas.height - 30;
+
+    // 매 프래임마다 캔버스에 그리는것을 반복하기 위해서 함수를 만들어주었다.
+    const draw = () => {
+        // 캔버스 지우기
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        // 공 그리기
+        ctx.beginPath();
+        ctx.arc(x, y, 10, 0, Math.PI * 2);
+        ctx.fillStyle = "#0095DD";
+        ctx.fill();
+        ctx.closePath();
+        // 매 실행마다 공의 위치값 변경
+        x += 2;
+        y -= 2;
+    }
+    // 10밀리초 마다 draw함수 실행
+    setInterval(draw, 10);
+</script>
+
+</html>

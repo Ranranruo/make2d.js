@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        canvas {
+            background-color: #eee;
+            display: block;
+            margin: 0 auto;
+        }
+    </style>
+</head>
+
+<body>
+    <canvas id="myCanvas" width="480" height="320"></canvas>
+</body>
+<script>
+    // 캔버스 생성과 그리기
+
+    // canvas에 <canvas> 태그에 대한 참조를 저장했다.
+    // ctx에 캔버스에 그리기 위한 실질적 도구인 2D rendering context 변수를 저장했다.
+    const canvas = document.querySelector("canvas");
+    const ctx = canvas.getContext("2d");
+
+    // 캔버스에 빨간 네모를 그리는 짧은 예제 코드
+    // 모든 명령어는 beginPath() 와 closePath() 사이에 들어간다
+    // rect() 를 이용해 직사각형을 정의 했다.
+    // 처음 두 값인 20, 40들은 캔버스의 좌상단 모서리로 부터의 좌표를 의미한다
+    // 마지막 두 값인 50, 50들은 직사각형의 width와 heigth 를 의미한다.
+
+    // 사각형 그리기 시작
+    ctx.beginPath();
+    // x: 20, y: 40 에 width: 50, height: 50 직사각형을 정의함
+    ctx.rect(20, 40, 50, 50);
+    // 직사각형의 배경색깔을 #FF0000 으로 정의함
+    ctx.fillStyle = "#FF0000";
+    // 지금까지 정의했던 값들을 canvas 에 그림
+    ctx.fill();
+    // 사각형 그리기 종료
+    ctx.closePath();
+
+
+    // 원 그리기 시작
+    ctx.beginPath();
+    // x: 240, y: 160에 반지름이 10인 원을 정의함
+    ctx.arc(240, 160, 10, 0, Math.PI * 2, false);
+    // 원의 배경색을 green으로 정의
+    ctx.fillStyle = "green";
+    // 지금까지 정의했던 값들을 canvas에 그림
+    ctx.fill();
+    // 원 그리기 종료
+    ctx.closePath();
+
+    // 테두리가 있는 사각형 그리기 시작
+    ctx.beginPath();
+    // x: 160, y: 10에 width: 100, height: 40의 사각형 정의
+    ctx.rect(160, 10, 100, 40);
+    // 사각형의 테두리 색깔 정의
+    ctx.strokeStyle = "rgba(0, 0, 255, 0.5)";
+    // 위에서 정의했던 사각형 테두리 그리긴
+    ctx.stroke();
+    // 테두리가 있는 사각형 그리기 종료
+    ctx.closePath();
+
+</script>
+
+</html>
