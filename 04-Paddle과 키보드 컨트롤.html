@@ -24,14 +24,49 @@
 </body>
 <script>
     // 캔버스 생성과 그리기
-    // 이전 과정에서 공을 움직이게 하였다.
-    // 하지만 공이 화면 밖으로 사라지는 문제점이 발생했다.
-    // 이를 해결하기 위해 화면 밖에 닿았을때 튕겨나올 수 있게 만들어 보겠다.
 
     // canvas에 <canvas> 태그에 대한 참조를 저장했다.
     // ctx에 캔버스에 그리기 위한 실질적 도구인 2D rendering context 변수를 저장했다.
     const canvas = document.querySelector("canvas");
     const ctx = canvas.getContext("2d");
+
+    let rightPressed = false;
+    let leftPressed = false;
+
+    // 키 입력
+    document.addEventListener("keydown", (e)=>{
+        if(e.keyCode == 39)
+            rightPressed = true;
+        if(e.keyCode == 37)
+            leftPressed = true;
+    })
+    document.addEventListener("keyup", (e)=>{
+        if(e.keyCode == 39)
+            rightPressed = false;
+        if(e.keyCode == 37)
+            leftPressed = false;
+    })
+
+    // 공을 치기 위한 paddle 정의
+    const paddle = {
+        height: 10,
+        width: 75,
+        x: (canvas.width - 75) / 2,
+    }
+
+    // paddle을 그리기 위한 함수
+    const drawPaddle = () => {
+        const { height, width, x } = paddle;
+        if(rightPressed)
+            paddle.x += 7;
+        else if (leftPressed)
+            paddle.x -= 7;
+        ctx.beginPath();
+        ctx.rect(x, canvas.height - height, width, height);
+        ctx.fillStyle = "0095DD";
+        ctx.fill();
+        ctx.closePath();
+    }
 
     // 원의 반지름을 저장함
     const ballRadius = 10;
@@ -45,9 +80,8 @@
     let dy = -2;
 
     // 매 프래임마다 캔버스에 그리는것을 반복하기 위해서 함수를 만들어주었다.
-    const draw = () => {
-        // 캔버스 지우기
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+    const drawBall = () => {
+        
         // 공 그리기
         ctx.beginPath();
         ctx.arc(x, y, ballRadius, 0, Math.PI * 2);
@@ -60,7 +94,7 @@
         y += dy;
 
         // 좌우 출동 체크
-        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius) 
+        if (x + dx > canvas.width - ballRadius || x + dx < ballRadius)
             dx = -dx;
         // 상하 출동 체크
         if (y + dy > canvas.height - ballRadius || y + dy < ballRadius)
@@ -68,7 +102,12 @@
 
     }
     // 10밀리초 마다 draw함수 실행
-    setInterval(draw, 10);
+    setInterval(() => {
+        // 캔버스 지우기
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        drawBall();
+        drawPaddle();
+    }, 10);
 </script>
 
 </html>
